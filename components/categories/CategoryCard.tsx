@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 
 type Props = {
@@ -9,9 +9,11 @@ type Props = {
 export default function CategoryCard(props: Props) {
   const { title, imgUrl } = props;
   return (
-    <TouchableOpacity>
-      <Image source={{ uri: imgUrl }} className="h-20 w-20 rounded" />
-      <Text>{title}</Text>
+    <TouchableOpacity className="relative h-20 w-20">
+      <Image source={{ uri: imgUrl }} className="absolute h-20 w-20 rounded" />
+      <Text className="absolute bottom-0 text-white font-semibold p-2">
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 }

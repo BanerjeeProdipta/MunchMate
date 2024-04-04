@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, FlatList } from "react-native";
 import React from "react";
-import ItemCard from "../itemCard";
-import { Item } from "@/types";
+import { Shop } from "@/types";
+import ShopCard from "../shopCard";
 
 type Props = {
   id: number;
@@ -11,16 +11,22 @@ type Props = {
 export default function FeaturedSection(props: Props) {
   const { id, title } = props;
 
-  const renderItem = ({ item }: { item: Item }) => <ItemCard item={item} />;
+  const renderItem = ({ item }: { item: Shop }) => <ShopCard {...item} />;
 
   return (
-    <View>
-      <Text className="text-lg font-semibold">{title}</Text>
+    <View className="mb-3">
+      <Text className="ml-4 text-lg font-semibold">{title}</Text>
       <FlatList
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         horizontal
+        contentContainerStyle={{
+          paddingHorizontal: 16,
+          paddingVertical: 8,
+        }}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
       />
     </View>
   );
@@ -29,9 +35,10 @@ export default function FeaturedSection(props: Props) {
 const items = [
   {
     id: 1,
-    title: "Delicious Pizza",
+    title: "Yum Pizza",
     imgUrl: "https://picsum.photos/100/200",
     rating: 4.5,
+    category: "Dessert",
     reviewCount: 120,
     delivery: {
       time: "30 minutes",
@@ -40,9 +47,10 @@ const items = [
   },
   {
     id: 2,
-    title: "Burger Combo",
+    title: "Burger Hut",
     imgUrl: "https://picsum.photos/100/200",
     rating: 4.2,
+    category: "Dessert",
     reviewCount: 90,
     delivery: {
       time: "25 minutes",
@@ -51,9 +59,10 @@ const items = [
   },
   {
     id: 3,
-    title: "Fresh Salad",
+    title: "Fresh Greens",
     imgUrl: "https://picsum.photos/100/200",
     rating: 4.7,
+    category: "Dessert",
     reviewCount: 80,
     delivery: {
       time: "20 minutes",
@@ -65,6 +74,7 @@ const items = [
     title: "Move and pick",
     imgUrl: "https://picsum.photos/100/200",
     rating: 4.7,
+    category: "Dessert",
     reviewCount: 80,
     delivery: {
       time: "20 minutes",

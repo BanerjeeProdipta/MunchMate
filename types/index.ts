@@ -1,9 +1,10 @@
-export type Item = {
+export type Shop = {
   id: number;
   title: string;
   imgUrl: string;
   rating: number;
   reviewCount: number;
+  category: string;
   delivery: Delivery;
 };
 

@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { NativeWindStyleSheet } from "nativewind";
 
 import { useColorScheme } from "@/components/useColorScheme";
+import Shop from "./shop";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -60,6 +61,7 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="shop" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
     </ThemeProvider>
