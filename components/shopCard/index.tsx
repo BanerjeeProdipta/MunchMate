@@ -1,24 +1,30 @@
-import { View, Text, Touchable, TouchableOpacity, Image } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 
 import { Shop } from "@/types";
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
+
+type NavigationParams = {
+  shopId: number;
+};
 
 export default function ShopCard(props: Shop) {
   const { id, title, imgUrl, rating, reviewCount, delivery, category } = props;
-  const navigation = useNavigation();
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
 
-  const handleShopPress = () => {
-    // Navigate to the shops screen
-    navigation.navigate("ShopsScreen", { shopId: id }); // Replace "ShopsScreen" with the name of your shops screen
+  const navigateToShop = () => {
+    navigation.navigate("Shop", { id });
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       className="bg-white rounded-lg shadow-md w-56"
-      activeOpacity={0.8}
-      onPress={handleShopPress}
+      onPress={navigateToShop}
     >
       <Image source={{ uri: imgUrl }} className="w-full h-32 rounded-t" />
       <View className="mt-0.5 p-2 space-y-1">
@@ -37,6 +43,6 @@ export default function ShopCard(props: Shop) {
           <Text className="font-medium">${delivery.charge.toFixed(2)}</Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
