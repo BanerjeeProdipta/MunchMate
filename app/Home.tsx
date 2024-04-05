@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <SafeAreaView className="bg-gray-200 space-y-3 flex-1">
       {/* Header start  */}
-      <View className="bg-primary px-3 py-2 space-y-3">
+      <View className="bg-primary px-3 pt-12 pb-2 space-y-3">
         <View className="space-y-3 flex-row items-center justify-between space-x-3">
           <View className="flex-row items-center space-x-3">
             <Feather name="menu" size={32} color="white" />

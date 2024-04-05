@@ -66,7 +66,11 @@ export default function RootLayout() {
           component={Home}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Shop" component={Shop} />
+        <Stack.Screen
+          name="Shop"
+          component={Shop}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </ThemeProvider>
   );

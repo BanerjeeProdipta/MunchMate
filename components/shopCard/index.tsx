@@ -9,10 +9,6 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 
-type NavigationParams = {
-  shopId: number;
-};
-
 export default function ShopCard(props: Shop) {
   const { id, title, imgUrl, rating, reviewCount, delivery, category } = props;
   const navigation: NavigationProp<ParamListBase> = useNavigation();
@@ -38,8 +34,8 @@ export default function ShopCard(props: Shop) {
         </View>
         <Text className="text-gray-600">{category}</Text>
 
-        <View className="flex flex-row justify-between">
-          <Text className="">{delivery.time}</Text>
+        <View className="flex flex-row justify-between items-center">
+          <Text>{delivery.time}</Text>
           <Text className="font-medium">${delivery.charge.toFixed(2)}</Text>
         </View>
       </View>
