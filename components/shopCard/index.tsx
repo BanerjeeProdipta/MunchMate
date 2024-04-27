@@ -19,7 +19,7 @@ export default function ShopCard(props: Shop) {
 
   return (
     <Pressable
-      className="bg-white rounded-lg shadow-md w-56"
+      className="bg-white rounded-lg boxShadow-md w-56"
       onPress={navigateToShop}
     >
       <Image source={{ uri: imgUrl }} className="w-full h-32 rounded-t" />
