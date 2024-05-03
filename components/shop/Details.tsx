@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 
 const Details = () => {
   return (
-    <View className="space-y-4">
+    <View className="space-y-4 px-4">
       <Text className="text-xl font-bold">Nando's</Text>
       <View className="flex flex-row items-center space-x-3">
         <Feather name="star" size={16} color="orange" />

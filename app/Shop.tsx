@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import {
   SectionList,
   FlatList,
@@ -6,6 +6,7 @@ import {
   Text,
   View,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { items } from "@/data";
 import ItemCard from "@/components/items/ItemCard";
@@ -16,6 +17,7 @@ import Header from "@/components/shop/Header";
 
 const Shop = () => {
   const sectionListRef = useRef<SectionList<Item>>(null);
+  const [showCategoryNav, setShowCategoryNav] = useState(false);
 
   const sections = useMemo(() => {
     const groupedBySections = groupBy(items, "category");
@@ -24,6 +26,12 @@ const Shop = () => {
       data: groupedBySections[category],
     }));
   }, [items]);
+
+  const handleScroll = (event: any) => {
+    const { y } = event.nativeEvent.contentOffset;
+    const windowHeight = Dimensions.get("window").height;
+    setShowCategoryNav(y > windowHeight);
+  };
 
   const scrollToCategory = (category: string) => {
     const index = sections.findIndex((section) => section.title === category);
@@ -36,35 +44,54 @@ const Shop = () => {
     }
   };
 
-  const renderCategoryNavBar = ({ item }: { item: string }) => (
-    <Pressable onPress={() => scrollToCategory(item)}>
-      <Text style={{ fontWeight: "bold", marginVertical: 3, marginRight: 12 }}>
-        {item}
-      </Text>
-    </Pressable>
-  );
-
   const renderItem = ({ item }: { item: Item }) => <ItemCard {...item} />;
 
+  const CategoryNav = () => {
+    return (
+      <ScrollView
+        horizontal
+        className="bg-gray-100"
+        stickyHeaderHiddenOnScroll={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        {sections.map((section) => (
+          <Pressable
+            key={section.title}
+            onPress={() => scrollToCategory(section.title)}
+          >
+            <Text className="font-bold mr-4 my-6 px-4">{section.title}</Text>
+          </Pressable>
+        ))}
+      </ScrollView>
+    );
+  };
+
   return (
-    <SectionList
-      ref={sectionListRef}
-      sections={sections}
-      renderItem={renderItem}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text className="font-bold mb-2 px-4">{title}</Text>
+    <View style={{ flex: 1 }}>
+      {showCategoryNav && (
+        <View className="sticky top-0 z-10">
+          <CategoryNav />
+        </View>
       )}
-      keyExtractor={(item) => item.id.toString()}
-      className="bg-gray-100"
-      ListHeaderComponent={
-        <ScrollView>
-          <Header />
-          <View className="bg-gray-100 py-4 px-4 space-y-3">
+      <SectionList
+        ref={sectionListRef}
+        className="bg-gray-100"
+        sections={sections}
+        renderItem={renderItem}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text className="mb-1 font-bold px-4">{title}</Text>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        onScroll={handleScroll}
+        ListHeaderComponent={
+          <ScrollView>
+            <Header />
             <Details />
-          </View>
-        </ScrollView>
-      }
-    />
+            <CategoryNav />
+          </ScrollView>
+        }
+      />
+    </View>
   );
 };
 
